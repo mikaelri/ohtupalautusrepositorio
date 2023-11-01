@@ -6,7 +6,6 @@ class SortBy(Enum):
     GOALS = 2
     ASSISTS = 3
 
-
 def sort_by_points(player):
     return player.points
 
@@ -51,7 +50,7 @@ class StatisticsService:
 
         result = []
         i = 0
-        #correct the while <= how_many
+        #korjattu while <=
         while i < how_many:
             result.append(sorted_players[i])
             i += 1

@@ -26,7 +26,7 @@ class TestStatisticsService(unittest.TestCase):
 
         # testi: jos pelaajaa ei löydy, niin palautuu None
     def test_pelaajaa_ei_löydy_haku_oikein(self):
-        pelaaja = self.stats.search("Koira")
+        pelaaja = self.stats.search("Litmanen")
         self.assertEqual(pelaaja, None)
 
         #testi: jos pelaaja löytyy, niin palautuu oikein
@@ -60,5 +60,5 @@ class TestStatisticsService(unittest.TestCase):
         #testi: virheellinen arrange-parametri palauttaa value errorin
     def test_arrange_parametri_ei_järjestä_listaa_jos_virheellinen(self):
         with self.assertRaises(ValueError):
-            self.stats.top(3, arrange="Litmanen")
+            self.stats.top(3, arrange="JAAHYT")
    
