@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  resource.robot
+Resource  register.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
 Test Setup  Create User And Go To Login Page
@@ -14,6 +15,12 @@ Login With Correct Credentials
 Login With Incorrect Password
     Set Username  kalle
     Set Password  kalle456
+    Submit Credentials
+    Login Should Fail With Message  Invalid username or password
+
+Login With Nonexistent Username
+    Set Username  testi
+    Set Password  Testi123
     Submit Credentials
     Login Should Fail With Message  Invalid username or password
 
@@ -41,3 +48,4 @@ Create User And Go To Login Page
     Create User  kalle  kalle123
     Go To Login Page
     Login Page Should Be Open
+
