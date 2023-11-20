@@ -20,7 +20,7 @@ Login With Incorrect Password
 
 Login With Nonexistent Username
     Set Username  testi
-    Set Password  Testi123
+    Set Password  testi123
     Submit Credentials
     Login Should Fail With Message  Invalid username or password
 
