@@ -1,5 +1,12 @@
 from entities.user import User
 
+class UserInputError(Exception):
+    pass
+
+class AuthenticationError(Exception):
+    pass
+
+
 
 class UserRepository:
     def __init__(self):
