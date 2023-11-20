@@ -1,7 +1,8 @@
 *.tmp
-__pycache__
-.pytest_cache
-htmlcov/
 *.coverage
 *.xml
 *.html
+*.png
+__pycache__
+.pytest_cache
+htmlcov/
