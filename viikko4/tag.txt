@@ -1,7 +1,3 @@
 muutos1
 muutos
-<<<<<<< HEAD
 muutos3
-lisämuutos ei näy missään
-=======
->>>>>>> parent of 095b1a2 (muutos3 tag)
