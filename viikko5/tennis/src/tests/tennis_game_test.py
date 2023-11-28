@@ -43,16 +43,14 @@ test_cases = [
     (14, 16, "Win for player2"),
 ]
 
-
 def play_game(p1_points, p2_points):
     game = TennisGame("player1", "player2")
     for i in range(max(p1_points, p2_points)):
         if i < p1_points:
-            game.won_point("player1")
+            game.update_points("player1")
         if i < p2_points:
-            game.won_point("player2")
+            game.update_points("player2")
     return game
-
 
 class TestTennis(unittest.TestCase):
     def test_score(self):
