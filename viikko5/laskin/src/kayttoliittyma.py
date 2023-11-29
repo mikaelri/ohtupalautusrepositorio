@@ -1,6 +1,6 @@
 from enum import Enum
 from tkinter import ttk, constants, StringVar
-from komentotehdas import Summa, Erotus, Nollaus, Kumoa
+from komennot import Summa, Erotus, Nollaus, Kumoa
 
 
 class Komento(Enum):
