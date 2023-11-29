@@ -6,7 +6,7 @@ class IntJoukko:
     def __init__(self, kapasiteetti=KAPASITEETTI, kasvatuskoko=OLETUSKASVATUS):
         self.kapasiteetti = kapasiteetti
         self.kasvatuskoko = kasvatuskoko
-        self.ljono = self.luo_lista(self.kapasiteetti)
+        self.ljono = self._luo_lista(self.kapasiteetti)
         self.luku = None
 
         if kapasiteetti is None or not isinstance(kapasiteetti, int) or kapasiteetti < 0:
@@ -16,7 +16,7 @@ class IntJoukko:
 
         self.alkioiden_lkm = 0
 
-    def luo_lista(self, koko):
+    def _luo_lista(self, koko):
         return [0] * koko
 
     def palauta_luku(self, luku):
@@ -35,7 +35,7 @@ class IntJoukko:
         if self.alkioiden_lkm % len(self.ljono) == 0:
             vanha_taulukko = self.ljono
             self.kopioi_lista(self.ljono, vanha_taulukko)
-            self.ljono = self.luo_lista(self.alkioiden_lkm + self.kasvatuskoko)
+            self.ljono = self._luo_lista(self.alkioiden_lkm + self.kasvatuskoko)
             self.kopioi_lista(vanha_taulukko, self.ljono)
 
     #Kesken
