@@ -7,14 +7,13 @@ class IntJoukko:
         self.kapasiteetti = kapasiteetti
         self.kasvatuskoko = kasvatuskoko
         self.ljono = self._luo_lista(self.kapasiteetti)
-        self.luku = None
+        self.alkioiden_lkm = 0
 
+    def validoi_parametrit(self, kapasiteetti, kasvatuskoko):
         if kapasiteetti is None or not isinstance(kapasiteetti, int) or kapasiteetti < 0:
             raise Exception("Väärä kapasiteetti")
         if kasvatuskoko is None or not isinstance(kasvatuskoko, int) or kasvatuskoko < 0:
             raise Exception("Väärä kasvatuskoko")
-
-        self.alkioiden_lkm = 0
 
     def _luo_lista(self, koko):
         return [0] * koko
@@ -22,9 +21,9 @@ class IntJoukko:
     def palauta_luku(self, luku):
         return luku in self.ljono
     
-    def lisaa(self, määrä):
-        if not self.palauta_luku(määrä):
-            self.lisaa_alkio(määrä)
+    def lisaa(self, luku):
+        if not self.palauta_luku(luku):
+            self.lisaa_alkio(luku)
             self.tarkista_kapasiteetti()
 
     def lisaa_alkio(self, määrä):
@@ -34,31 +33,23 @@ class IntJoukko:
     def tarkista_kapasiteetti(self):
         if self.alkioiden_lkm % len(self.ljono) == 0:
             vanha_taulukko = self.ljono
-            self.kopioi_lista(self.ljono, vanha_taulukko)
             self.ljono = self._luo_lista(self.alkioiden_lkm + self.kasvatuskoko)
             self.kopioi_lista(vanha_taulukko, self.ljono)
 
-    #Kesken
-    def poista(self, luku):
-        kohta = -1
-        apu = 0
-
-        for i in range(0, self.alkioiden_lkm):
-            if luku == self.ljono[i]:
-                kohta = i  # siis luku löytyy tuosta kohdasta :D
-                self.ljono[kohta] = 0
-                break
+    def poista(self, kohde):
+        kohta = self.etsi_luku(kohde)
 
         if kohta != -1:
-            for j in range(kohta, self.alkioiden_lkm - 1):
-                apu = self.ljono[j]
-                self.ljono[j] = self.ljono[j + 1]
-                self.ljono[j + 1] = apu
-
-            self.alkioiden_lkm = self.alkioiden_lkm - 1
+            del self.ljono[kohta]
+            self.alkioiden_lkm -= 1
             return True
-
         return False
+    
+    def etsi_luku (self, kohde):
+        for luku in range (self.alkioiden_lkm):
+            if kohde == self.ljono[luku]:
+                return luku
+        return -1
 
     def kopioi_lista(self, vanha_lista, uusi_lista):
         for koko in range(0, len(vanha_lista)):
@@ -70,61 +61,35 @@ class IntJoukko:
     def palauta_lista(self):
         return list(self.ljono[:self.alkioiden_lkm])
 
-    #Kesken
     @staticmethod
-    def yhdiste(a, b):
-        x = IntJoukko()
-        a_taulu = a.palauta_lista()
-        b_taulu = b.palauta_lista()
-
-        for i in range(0, len(a_taulu)):
-            x.lisaa(a_taulu[i])
-
-        for i in range(0, len(b_taulu)):
-            x.lisaa(b_taulu[i])
-
-        return x
+    def yhdiste(vanha, uusi):
+        yhdistetty_taulukko = IntJoukko()
+        for luku in vanha.palauta_lista() + uusi.palauta_lista():
+            yhdistetty_taulukko.lisaa(luku)
+            
+        return yhdistetty_taulukko
     
-    #Kesken
     @staticmethod
-    def leikkaus(a, b):
-        y = IntJoukko()
-        a_taulu = a.palauta_lista()
-        b_taulu = b.palauta_lista()
+    def leikkaus(vanha, uusi):
+        leikkaus_taulukko = IntJoukko()
 
-        for i in range(0, len(a_taulu)):
-            for j in range(0, len(b_taulu)):
-                if a_taulu[i] == b_taulu[j]:
-                    y.lisaa(b_taulu[j])
+        for luku in vanha.palauta_lista():
+            if uusi.palauta_luku(luku):
+                leikkaus_taulukko.lisaa(luku)
 
-        return y
-
-    #Kesken
-    @staticmethod
-    def erotus(a, b):
-        z = IntJoukko()
-        a_taulu = a.palauta_lista()
-        b_taulu = b.palauta_lista()
-
-        for i in range(0, len(a_taulu)):
-            z.lisaa(a_taulu[i])
-
-        for i in range(0, len(b_taulu)):
-            z.poista(b_taulu[i])
-
-        return z
+        return leikkaus_taulukko
     
-    #Kesken
+    @staticmethod
+    def erotus(vanha, uusi):
+        erotus_taulukko = IntJoukko()
+
+        for luku in vanha.palauta_lista():
+            erotus_taulukko.lisaa(luku)
+        
+        for luku in uusi.palauta_lista():
+            erotus_taulukko.poista(luku)
+
+        return erotus_taulukko
+    
     def __str__(self):
-        if self.alkioiden_lkm == 0:
-            return "{}"
-        elif self.alkioiden_lkm == 1:
-            return "{" + str(self.ljono[0]) + "}"
-        else:
-            tuotos = "{"
-            for i in range(0, self.alkioiden_lkm - 1):
-                tuotos = tuotos + str(self.ljono[i])
-                tuotos = tuotos + ", "
-            tuotos = tuotos + str(self.ljono[self.alkioiden_lkm - 1])
-            tuotos = tuotos + "}"
-            return tuotos
+        return "{" + ", ".join(map(str, self.ljono[:self.alkioiden_lkm])) + "}"

@@ -12,8 +12,9 @@ def main():
     joukko.lisaa(4)
     joukko.lisaa(5)
     joukko.lisaa(6)
+    joukko.lisaa(6)
 
-    print(joukko.to_int_list())
+    print(joukko.palauta_lista())
 
 
 if __name__ == "__main__":
