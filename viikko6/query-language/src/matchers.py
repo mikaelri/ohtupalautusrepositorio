@@ -16,7 +16,6 @@ class PlaysIn:
     def test(self, player):
         return player.team == self._team
 
-
 class HasAtLeast:
     def __init__(self, value, attr):
         self._value = value
@@ -24,7 +23,6 @@ class HasAtLeast:
 
     def test(self, player):
         player_value = getattr(player, self._attr)
-
         return player_value >= self._value
     
 class Not:
@@ -66,5 +64,3 @@ class Or:
                 return True
             
         return False
-
-
